@@ -1,14 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jeepneygo_milestone/main.dart';
 import 'package:jeepneygo_milestone/models/weather_model.dart';
 
-//  Weather Service 
+//  Weather Service
 
 class WeatherService {
   static const _baseUrl = 'https://api.open-meteo.com/v1/forecast';
-  static const _lat = 15.1450; // Angeles City, Pampanga
+  static const _lat = 15.1450;
   static const _lon = 120.5887;
 
   static Future<WeatherModel> fetchWeather() async {
@@ -21,20 +22,23 @@ class WeatherService {
       '&temperature_unit=celsius',
     );
 
-    // HTTP GET request using the http package
-    final response = await http.get(uri).timeout(const Duration(seconds: 10));
-
-    if (response.statusCode == 200) {
-      // JSON decoding + model parsing via fromJson
-      final json = jsonDecode(response.body) as Map<String, dynamic>;
-      return WeatherModel.fromJson(json);
-    } else {
-      throw Exception('Server error: ${response.statusCode}');
+    try {
+      final response = await http.get(uri).timeout(const Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as Map<String, dynamic>;
+        return WeatherModel.fromJson(json);
+      } else {
+        throw Exception('Server error: ${response.statusCode}');
+      }
+    } on TimeoutException {
+      throw Exception('Request timed out');
+    } catch (e) {
+      throw Exception('No internet connection');
     }
   }
 }
 
-//  Weather Widget 
+//  Weather Widget
 
 class WeatherWidget extends StatefulWidget {
   const WeatherWidget({super.key});
@@ -55,13 +59,20 @@ class _WeatherWidgetState extends State<WeatherWidget> {
   }
 
   Future<void> _load() async {
-    setState(() {
-      _loading = true;
-      _error = null;
-    });
+    if (mounted) {
+      setState(() {
+        _loading = true;
+        _error = null;
+      });
+    }
     try {
       final w = await WeatherService.fetchWeather();
-      if (mounted) setState(() { _weather = w; _loading = false; });
+      if (mounted) {
+        setState(() {
+          _weather = w;
+          _loading = false;
+        });
+      }
     } catch (e) {
       if (mounted) {
         setState(() {
@@ -148,7 +159,7 @@ class _WeatherWidgetState extends State<WeatherWidget> {
                     strokeWidth: 2.5,
                     valueColor: AlwaysStoppedAnimation<Color>(J.gold),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Text(
                     'Fetching weather…',
                     style: TextStyle(
@@ -166,14 +177,9 @@ class _WeatherWidgetState extends State<WeatherWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18),
-                border: Border(
-                  left: BorderSide(color: J.gold, width: 4),
-                  top: BorderSide(color: Colors.white.withOpacity(.5), width: 1.5),
-                  right: BorderSide(color: Colors.white.withOpacity(.5), width: 1.5),
-                  bottom: BorderSide(color: Colors.white.withOpacity(.5), width: 1.5),
-                ),
+                color: Colors.red.withOpacity(.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: J.red.withOpacity(.3)),
               ),
               child: Row(
                 children: [
@@ -213,7 +219,7 @@ class _WeatherWidgetState extends State<WeatherWidget> {
               ),
             )
 
-          // Success State 
+          // ── Success State ──
           else if (_weather != null)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
