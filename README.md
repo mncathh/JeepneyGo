@@ -1,16 +1,19 @@
-# jeepneygo_milestone
+# JeepneyGo 🚌
+A jeepney route guide app for commuters in Angeles City, Pampanga. Built with Flutter.
 
-A new Flutter project.
+# Purpose
+JeepneyGo is made for daily commuters, students, and visitors who need a quick and easy way to find jeepney routes in Angeles City. Instead of asking around or guessing, users can open the app and immediately see available routes, stops, and fares — all in one place.
 
-## Getting Started
+# Features
+- Browse jeepney routes with stops and fare info
+- Save favourite routes for quick access
+- Live weather updates from Open-Meteo API
+- News and alerts about road closures and fare changes
+- CRUD for custom routes — add, view, edit, and delete your own jeepney routes
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Group Members
+- Laguda, Catherine Tyra (Leader)
+- Cabral, Marisher
+- David, Rafael Carmelo
+- Lacanlale, Princess Angela
+- Mangacu, Claire Anne
