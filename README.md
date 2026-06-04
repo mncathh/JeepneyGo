@@ -1,6 +1,7 @@
 # JeepneyGo 🚌
 A jeepney route guide app for commuters in Angeles City, Pampanga. Built with Flutter.
-//Video Demo: https://drive.google.com/file/d/1J6lFdT9vgrMwtDj7mpXRlhu20187zVuG/view?usp=drive_link
+
+##Video Demo: https://drive.google.com/file/d/1J6lFdT9vgrMwtDj7mpXRlhu20187zVuG/view?usp=drive_link
 
 ## Purpose
 JeepneyGo is made for daily commuters, students, and visitors who need a quick and easy way to find jeepney routes in Angeles City. Instead of asking around or guessing, users can open the app and immediately see available routes, stops, and fares — all in one place.
